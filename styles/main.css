@@ -19,11 +19,16 @@ html, body {
 header {
   background-color: #f26c4f;
   color: white;
-  padding: clamp(1rem, 2.5vw, 1.5rem);
+  padding: clamp(0.2rem, 2.5vw, 0.5rem);
   text-align: center;
   font-size: clamp(1.2rem, 5vw, 2rem);
   font-weight: 600;
   flex-shrink: 0;
+}
+
+.header-logo {
+  width: 30%; /* or whatever size you want */
+  height: auto; /* keeps the aspect ratio */
 }
 
 /* Page Container */
