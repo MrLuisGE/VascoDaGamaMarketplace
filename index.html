@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vasco da Gama Marketplace</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Papa Parse -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    Vasco da Gama
+  </header>
+
+  <!-- Page Layout -->
+  <div class="page-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <!-- Top Icon -->
+      <div class="sidebar-top">
+        <button class="icon-btn" title="Filters">☰</button>
+      </div>
+
+      <!-- Floor Buttons -->
+      <div class="sidebar-middle">
+        <h2 class="sidebar-title">Floors</h2>
+        <div class="filters">
+          <button data-floor="3">3</button>
+          <button data-floor="2">2</button>
+          <button data-floor="1">1</button>
+          <button data-floor="0" class="active">0</button>
+        </div>
+      </div>
+
+      <!-- Bottom Icons -->
+      <div class="sidebar-bottom">
+        <button class="icon-btn" title="Settings">⚙️</button>
+        <button class="icon-btn" title="Support">❓</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+      <div class="content-scroll">
+
+        <!-- Current Floor Label -->
+        <div id="floor-label" class="floor-label">Floor 0</div>
+
+        <!-- Grid of Shops -->
+        <div id="shop-grid"></div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button id="prev-page" class="pagination-btn">Previous</button>
+        <span id="page-info" class="page-info"></span>
+        <button id="next-page" class="pagination-btn">Next</button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="shop-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="scripts/app.js"></script>
+
+</body>
+</html>
