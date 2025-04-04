@@ -10,21 +10,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextPageBtn = document.getElementById("next-page");
   const pageInfo = document.getElementById("page-info");
 
+  // Filter modal
+  const filterModal = document.getElementById("filter-modal");
+  const openFilterBtn = document.querySelector(".sidebar-top .icon-btn");
+  const closeFilterBtn = document.getElementById("close-filter");
+  const applyFilterBtn = document.getElementById("apply-filter");
+  const resetFilterBtn = document.getElementById("reset-filter");
+  const categoryContainer = document.getElementById("category-options");
+
   let allShops = [];
   let filteredShops = [];
   let currentPage = 1;
   const itemsPerPage = 6;
 
   let currentFloorIndex = 0;
+  let allCategories = new Set();
 
   Papa.parse("data/vasco_da_gama_shops.csv", {
     download: true,
     header: true,
     complete: (results) => {
       allShops = results.data;
+
+      // Build unique categories
+      allShops.forEach((shop) => {
+        (shop.categories?.split(",") || []).forEach((cat) =>
+          allCategories.add(cat.trim())
+        );
+      });
+
+      generateCategoryCheckboxes();
       setActiveFloor("0");
     },
   });
+
+  function generateCategoryCheckboxes() {
+    categoryContainer.innerHTML = "";
+    [...allCategories].sort().forEach((cat) => {
+      const id = `cat-${cat.replace(/\s+/g, "-").toLowerCase()}`;
+      const checkbox = document.createElement("label");
+      checkbox.innerHTML = `
+        <input type="checkbox" name="category" value="${cat}" id="${id}"> ${cat}
+      `;
+      categoryContainer.appendChild(checkbox);
+      categoryContainer.appendChild(document.createElement("br"));
+    });
+  }
 
   function setActiveFloor(floor) {
     floorButtons.forEach((btn, index) => {
@@ -34,9 +65,12 @@ document.addEventListener("DOMContentLoaded", () => {
         currentFloorIndex = index;
       }
     });
-    filteredShops = allShops.filter((shop) => shop.floor == floor);
+
+    const floorShops = allShops.filter((shop) => shop.floor == floor);
+    filteredShops = applyAllFilters(floorShops);
     currentPage = 1;
     renderCurrentPage();
+
     if (floorLabel) {
       floorLabel.textContent = `Floor ${floor}`;
     }
@@ -61,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     shops.forEach((shop) => {
       const isOpen = shop.status === "Open";
       const priceIcons = "$".repeat(shop.price);
-      const categories = shop.categories?.split(",").map(cat => cat.trim()) || [];
+      const categories = shop.categories?.split(",").map((cat) => cat.trim()) || [];
 
       const card = document.createElement("div");
       card.className = "shop-card";
@@ -83,14 +117,12 @@ document.addEventListener("DOMContentLoaded", () => {
             ${isOpen ? "Aberto" : "Fechado"}
           </div>
           <div class="tag-container">
-            ${categories.map(cat => `<span class="tag">${cat}</span>`).join("")}
+            ${categories.map((cat) => `<span class="tag">${cat}</span>`).join("")}
           </div>
         </div>
       `;
 
-      card.addEventListener("click", () => {
-        openModal(shop, isOpen);
-      });
+      card.addEventListener("click", () => openModal(shop, isOpen));
 
       card.querySelector(".heart-btn").addEventListener("click", (e) => {
         e.stopPropagation();
@@ -128,10 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="modal-section">
-        <button class="direction-btn">Directions</button>
-      </div>
-
-      <div class="modal-section">
         <p class="hours-status">
           <span class="${isOpen ? "open" : "closed"}">${shop.status}</span>
           • Closes 12 a.m.
@@ -154,6 +182,10 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>Please see the store detail page for more info.</p>
       </div>
 
+      <div class="modal-section">
+        <button class="direction-btn">Order on Skipy</button>
+      </div>
+
       <div class="modal-footer">
         <a href="tel:${shop.phone}" class="contact-icon">📞</a>
         ${socials
@@ -168,9 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.classList.remove("hidden");
   }
 
-  closeBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+  closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
 
   floorButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -192,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Swipe Gesture Support
+  // Swipe support
   let touchStartX = 0;
   let touchStartY = 0;
 
@@ -204,7 +234,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("touchend", (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-
     const absDx = Math.abs(dx);
     const absDy = Math.abs(dy);
 
@@ -228,4 +257,36 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+
+  // Filter modal open/close
+  openFilterBtn?.addEventListener("click", () => filterModal?.classList.remove("hidden"));
+  closeFilterBtn?.addEventListener("click", () => filterModal?.classList.add("hidden"));
+  applyFilterBtn?.addEventListener("click", () => {
+    const currentFloor = floorButtons[currentFloorIndex].getAttribute("data-floor");
+    const floorShops = allShops.filter((shop) => shop.floor == currentFloor);
+    filteredShops = applyAllFilters(floorShops);
+    currentPage = 1;
+    renderCurrentPage();
+    filterModal?.classList.add("hidden");
+  });
+
+  resetFilterBtn?.addEventListener("click", () => {
+    document.querySelectorAll('#filter-modal input[type="checkbox"], input[type="radio"]').forEach((input) => {
+      input.checked = input.type === "radio" && input.value === "all";
+    });
+  });
+
+  function applyAllFilters(shops) {
+    const selectedStatus = document.querySelector('input[name="status"]:checked')?.value || "all";
+    const selectedPrices = Array.from(document.querySelectorAll('input[name="price"]:checked')).map(cb => cb.value);
+    const selectedCategories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(cb => cb.value);
+
+    return shops.filter((shop) => {
+      const matchesStatus = selectedStatus === "all" || shop.status === selectedStatus;
+      const matchesPrice = selectedPrices.length === 0 || selectedPrices.includes(shop.price);
+      const shopCats = shop.categories?.split(",").map((c) => c.trim()) || [];
+      const matchesCategory = selectedCategories.length === 0 || selectedCategories.some((cat) => shopCats.includes(cat));
+      return matchesStatus && matchesPrice && matchesCategory;
+    });
+  }
 });

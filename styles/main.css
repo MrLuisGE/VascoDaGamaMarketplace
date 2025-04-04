@@ -268,7 +268,7 @@ header {
   font-weight: 500;
 }
 
-/* Modal */
+/* Modal (Shared) */
 .modal {
   position: fixed;
   top: 0;
@@ -292,7 +292,11 @@ header {
   max-width: 500px;
   position: relative;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
 }
+
+/* Modal Close Button */
 .close-btn {
   position: absolute;
   top: 12px;
