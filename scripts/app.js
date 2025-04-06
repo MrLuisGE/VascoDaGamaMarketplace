@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextPageBtn = document.getElementById("next-page");
   const pageInfo = document.getElementById("page-info");
 
-  // Filter modal
   const filterModal = document.getElementById("filter-modal");
   const openFilterBtn = document.querySelector(".sidebar-top .icon-btn");
   const closeFilterBtn = document.getElementById("close-filter");
@@ -32,7 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
     complete: (results) => {
       allShops = results.data;
 
-      // Build unique categories
       allShops.forEach((shop) => {
         (shop.categories?.split(",") || []).forEach((cat) =>
           allCategories.add(cat.trim())
@@ -40,9 +38,21 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       generateCategoryCheckboxes();
-      setActiveFloor("0");
+      checkInitialHash();
     },
   });
+
+  function checkInitialHash() {
+    const hash = window.location.hash.replace("#", "");
+    const validFloors = Array.from(floorButtons).map((btn) =>
+      btn.getAttribute("data-floor")
+    );
+    if (validFloors.includes(hash)) {
+      setActiveFloor(hash);
+    } else {
+      setActiveFloor("0");
+    }
+  }
 
   function generateCategoryCheckboxes() {
     categoryContainer.innerHTML = "";
@@ -70,6 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredShops = applyAllFilters(floorShops);
     currentPage = 1;
     renderCurrentPage();
+
+    // Atualiza a URL com a hash do piso
+    window.location.hash = "#" + floor;
 
     if (floorLabel) {
       floorLabel.textContent = `Floor ${floor}`;
@@ -114,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <span class="price">${priceIcons}</span>
           </div>
           <div class="shop-status ${isOpen ? "open" : "closed"}">
-            ${isOpen ? "Aberto" : "Fechado"}
+            ${isOpen ? "Aberto" : "Encerrado"}
           </div>
           <div class="tag-container">
             ${categories.map((cat) => `<span class="tag">${cat}</span>`).join("")}
@@ -258,9 +271,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Filter modal open/close
   openFilterBtn?.addEventListener("click", () => filterModal?.classList.remove("hidden"));
   closeFilterBtn?.addEventListener("click", () => filterModal?.classList.add("hidden"));
+
   applyFilterBtn?.addEventListener("click", () => {
     const currentFloor = floorButtons[currentFloorIndex].getAttribute("data-floor");
     const floorShops = allShops.filter((shop) => shop.floor == currentFloor);

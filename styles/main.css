@@ -17,7 +17,7 @@ html, body {
 
 /* Header */
 header {
-  background-color: #f26c4f;
+  background-color: #0B0B0B;
   color: white;
   padding: clamp(0.2rem, 2.5vw, 0.5rem);
   text-align: center;
@@ -95,9 +95,9 @@ header {
 }
 .filters button:hover,
 .filters button.active {
-  background: #f26c4f;
+  background: #0B0B0B;
   color: white;
-  border-color: #f26c4f;
+  border-color: #0B0B0B;
 }
 
 /* Icon Buttons */
@@ -110,7 +110,7 @@ header {
   transition: color 0.2s;
 }
 .icon-btn:hover {
-  color: #f26c4f;
+  color: #0B0B0B;
 }
 
 /* Content */
@@ -178,6 +178,21 @@ header {
   object-fit: contain;
   background-color: #f4f4f4;
 }
+
+.shop-info h3 {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.8vw, 1rem); /* smaller and responsive */
+  font-weight: 600;
+  color: #222;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;       /* limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
 .heart-btn {
   background: none;
   border: none;
@@ -255,7 +270,7 @@ header {
   gap: 1rem;
 }
 .pagination-btn {
-  background-color: #f26c4f;
+  background-color: #0B0B0B;
   color: white;
   border: none;
   padding: 8px 16px;
