@@ -6,7 +6,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden;
+  /* No scrolling overall (pagination used instead): */
+  overflow: hidden; 
   font-family: 'Inter', sans-serif;
   color: #333;
   display: flex;
@@ -19,16 +20,31 @@ html, body {
 header {
   background-color: #0B0B0B;
   color: white;
-  padding: clamp(0.2rem, 2.5vw, 0.5rem);
+  padding: clamp(0.3rem, 2.5vw, 0.6rem);
   text-align: center;
   font-size: clamp(1.2rem, 5vw, 2rem);
   font-weight: 600;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .header-logo {
-  width: 30%; /* or whatever size you want */
-  height: auto; /* keeps the aspect ratio */
+  height: auto;
+  width: clamp(80px, 30%, 150px); 
+}
+
+/* Right side of header with the Search icon */
+.header-right {
+  position: absolute;
+  right: clamp(0.5rem, 4vw, 1rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.4rem, 1vw, 0.8rem);
 }
 
 /* Page Container */
@@ -39,7 +55,7 @@ header {
   overflow: hidden;
 }
 
-/* Sidebar Layout */
+/* Sidebar */
 .sidebar {
   width: clamp(70px, 8vw, 90px);
   background-color: #fff;
@@ -58,6 +74,7 @@ header {
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 1rem;
+  align-items: center;
 }
 
 .sidebar-middle {
@@ -69,7 +86,7 @@ header {
 }
 
 .sidebar-title {
-  font-size: clamp(0.8rem, 1.6vw, 1.2rem);
+  font-size: clamp(0.75rem, 1.4vw, 1rem);
   margin-bottom: 1rem;
   text-align: center;
   font-weight: 600;
@@ -79,15 +96,15 @@ header {
 .filters {
   display: flex;
   flex-direction: column;
-  gap: clamp(10px, 1.5vw, 16px);
+  gap: clamp(8px, 2vw, 16px);
 }
 .filters button {
-  width: clamp(44px, 5vw, 60px);
-  height: clamp(44px, 5vw, 60px);
+  width: clamp(44px, 7vw, 70px);
+  height: clamp(44px, 7vw, 70px);
   background: white;
   border: 2px solid #ccc;
   border-radius: 12px;
-  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-size: clamp(1rem, 3vw, 1.4rem);
   font-weight: bold;
   color: #444;
   cursor: pointer;
@@ -100,14 +117,18 @@ header {
   border-color: #0B0B0B;
 }
 
-/* Icon Buttons */
+/* Sidebar Icon Buttons */
 .icon-btn {
   background: none;
   border: none;
-  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   cursor: pointer;
   color: #666;
   transition: color 0.2s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .icon-btn:hover {
   color: #0B0B0B;
@@ -118,34 +139,46 @@ header {
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; 
   min-height: 0;
 }
 .content-scroll {
   flex: 1;
-  overflow: hidden;
+  overflow: hidden; 
   padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
-/* Floor Label */
-.floor-label {
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  font-weight: 600;
-  text-align: left;
-  margin-bottom: 0.8rem;
-  color: #333;
-}
-
-/* Shop Grid */
+/* 
+  Default: 2 rows × 3 columns => 6 items 
+  If width <600 => 2 columns
+  If width <370 => 1 column
+  If height <650 => 1 row => 3 items
+*/
 #shop-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
   gap: clamp(12px, 2vw, 18px);
   flex: 1;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 600px) {
+  #shop-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 370px) {
+  #shop-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-height: 650px) {
+  #shop-grid {
+    grid-template-rows: repeat(1, auto);
+  }
 }
 
 /* Shop Card */
@@ -156,9 +189,11 @@ header {
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+  height: clamp(180px, 25vw, 260px);
+  overflow: hidden;
 }
 .shop-card:hover {
   transform: translateY(-3px);
@@ -172,47 +207,37 @@ header {
   margin-bottom: 0.5rem;
 }
 .shop-image {
-  width: clamp(32px, 4vw, 42px);
-  height: clamp(32px, 4vw, 42px);
+  width: clamp(40px, 8vw, 60px);
+  height: clamp(40px, 8vw, 60px);
   border-radius: 10px;
   object-fit: contain;
   background-color: #f4f4f4;
 }
 
+/* Price icon container */
+.price-icon {
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  color: #333;
+  white-space: nowrap;
+}
+
+/* Shop Info */
 .shop-info h3 {
   margin: 0;
-  font-size: clamp(0.8rem, 1.8vw, 1rem); /* smaller and responsive */
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 600;
   color: #222;
   display: -webkit-box;
-  -webkit-line-clamp: 2;       /* limit to 2 lines */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 0.3rem;
 }
 
-
-
-.heart-btn {
-  background: none;
-  border: none;
-  font-size: clamp(1.2rem, 2vw, 1.5rem);
-  color: #ccc;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.heart-btn.favorited {
-  color: #e74c3c;
-}
-
-.shop-info h3 {
-  margin: 0;
-  font-size: clamp(0.95rem, 2vw, 1.15rem);
-  font-weight: 600;
-  color: #222;
-}
+/* Ratings */
 .rating-stars {
-  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  font-size: clamp(0.7rem, 1.4vw, 0.85rem);
   color: #f1c40f;
   display: flex;
   align-items: center;
@@ -223,39 +248,20 @@ header {
   color: #777;
   font-size: clamp(0.65rem, 1.4vw, 0.75rem);
 }
-.shop-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-  margin-top: 6px;
-}
-.price {
-  color: #444;
-  font-weight: 500;
-}
-.shop-status {
+
+/* Shop Status & Floor */
+.shop-status-floor {
   font-size: clamp(0.7rem, 1.4vw, 0.85rem);
   margin-top: 4px;
   color: #2ecc71;
 }
-.shop-status.closed {
+.shop-status-floor.closed {
   color: #e74c3c;
 }
 
-/* Tags */
+/* Make the space under .tag-container smaller */
 .tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 0.5rem;
-}
-.tag {
-  background: #eee;
-  padding: 4px 10px;
-  border-radius: 999px;
-  font-size: clamp(0.65rem, 1.3vw, 0.85rem);
-  white-space: nowrap;
+  margin-top: 0.25rem; /* smaller than default */
 }
 
 /* Pagination */
@@ -277,7 +283,7 @@ header {
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
-  font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+  font-size: clamp(0.7rem, 1.4vw, 0.9rem);
 }
 .pagination-btn:disabled {
   background-color: #ccc;
@@ -288,7 +294,7 @@ header {
   font-weight: 500;
 }
 
-/* Modal (Shared) */
+/* Modals same as before */
 .modal {
   position: fixed;
   top: 0;
@@ -306,7 +312,7 @@ header {
 }
 .modal-content {
   background: white;
-  padding: clamp(1.5rem, 3vw, 2rem);
+  padding: clamp(1rem, 3vw, 2rem);
   border-radius: 12px;
   width: 90%;
   max-width: 500px;
@@ -315,21 +321,17 @@ header {
   max-height: 90vh;
   overflow-y: auto;
 }
-
-/* Modal Close Button */
 .close-btn {
   position: absolute;
   top: 12px;
   right: 16px;
-  font-size: clamp(1.4rem, 2.5vw, 1.6rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   cursor: pointer;
   color: #999;
 }
 .close-btn:hover {
   color: #333;
 }
-
-/* Modal Sections */
 .modal-header {
   display: flex;
   align-items: center;
@@ -351,12 +353,6 @@ header {
   font-size: clamp(0.8rem, 1.4vw, 0.95rem);
   color: #777;
   margin-top: 4px;
-}
-.modal-header .open {
-  color: #2ecc71;
-}
-.modal-header .closed {
-  color: #e74c3c;
 }
 .modal-section {
   margin: 1.5rem 0;
@@ -399,4 +395,48 @@ header {
 }
 .direction-btn:hover {
   background-color: #005f77;
+}
+
+/* Search styles, etc. same as before */
+#search-input {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: clamp(0.85rem, 1.5vw, 1rem);
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+#search-results {
+  margin-top: 1rem;
+}
+.search-result {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.search-result:hover {
+  background: #f5f5f5;
+}
+.search-result img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  background: #f2f2f2;
+  border-radius: 6px;
+}
+.search-result h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: #333;
+}
+.search-result p {
+  margin: 0;
+  font-size: clamp(0.75rem, 1.4vw, 0.9rem);
+  color: #666;
 }

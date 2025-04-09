@@ -19,16 +19,20 @@
   <!-- Header -->
   <header>
     <img src="img/vasco-da-gama.svg" alt="Vasco da Gama" class="header-logo" />
+    <!-- Search icon on the right -->
+    <div class="header-right">
+      <button class="icon-btn search-btn" title="Search">🔎</button>
+    </div>
   </header>
   
-  <!-- Page Layout -->
+  <!-- Page Container -->
   <div class="page-container">
 
     <!-- Sidebar -->
     <aside class="sidebar">
-      <!-- Top Icon -->
+      <!-- Top Icon (Filters) -->
       <div class="sidebar-top">
-        <button class="icon-btn" title="Filters">☰</button>
+        <button class="icon-btn filter-btn" title="Filters">☰</button>
       </div>
 
       <!-- Floor Buttons -->
@@ -44,10 +48,10 @@
         </div>
       </div>
 
-      <!-- Bottom Icons -->
+      <!-- Bottom Icons (Settings & Contact) -->
       <div class="sidebar-bottom">
-        <button class="icon-btn" title="Settings">⚙️</button>
-        <button class="icon-btn" title="Support">❓</button>
+        <button class="icon-btn settings-btn" title="Settings">⚙️</button>
+        <button class="icon-btn sos-btn" title="Contact">🆘</button>
       </div>
     </aside>
 
@@ -102,7 +106,7 @@
       <div class="modal-section">
         <label>Categories:</label>
         <div id="category-options">
-          <!-- checkboxes will be injected here -->
+          <!-- checkboxes injected here -->
         </div>
       </div>
 
@@ -110,6 +114,40 @@
         <button id="apply-filter" class="direction-btn" style="flex: 1;">Apply Filter</button>
         <button id="reset-filter" class="direction-btn" style="flex: 1; background: #ccc; color: #000;">Reset</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Search Modal -->
+  <div id="search-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="close-search">&times;</span>
+      <h2 style="margin-top: 0;">Search Shops</h2>
+
+      <div class="modal-section">
+        <input type="text" id="search-input" placeholder="Search by name, category..." />
+      </div>
+      
+      <div id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="close-settings">&times;</span>
+      <h2>Settings (MVP)</h2>
+      <p>Minimal version of Settings. (Placeholder)</p>
+    </div>
+  </div>
+
+  <!-- Support (Contact) Modal -->
+  <div id="sos-modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn" id="close-sos">&times;</span>
+      <h2>Contact (MVP)</h2>
+      <p>Need help? Contact us at <br>
+      <strong>support@vascodagama.com</strong><br>
+      (+351) 123 456 789.</p>
     </div>
   </div>
 
