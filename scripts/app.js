@@ -136,17 +136,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderShops(shopsOnPage);
 
-    pageInfo.textContent = `Page ${currentPage} of ${Math.ceil(
+    pageInfo.textContent = `Página ${currentPage} de ${Math.ceil(
       filteredShops.length / itemsPerPage
     )}`;
     prevPageBtn.disabled = currentPage === 1;
     nextPageBtn.disabled = endIndex >= filteredShops.length;
   }
 
+  function translateDays(day) {
+    const days = {
+      "Monday": "Segunda-feira",
+      "Tuesday": "Terça-feira",
+      "Wednesday": "Quarta-feira",
+      "Thursday": "Quinta-feira",
+      "Friday": "Sexta-feira",
+      "Saturday": "Sábado",
+      "Sunday": "Domingo"
+    };
+    return days[day] || day;
+  }
+
   function renderShops(shops) {
     grid.innerHTML = "";
     shops.forEach((shop) => {
-      const isOpen = (shop.status === "Open");
+      const isOpen = (shop.status === "Aberto");
       const priceCount = shop.price ? parseInt(shop.price, 10) : 1;
       const priceIcons = "$".repeat(priceCount);
 
@@ -217,30 +230,30 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="modal-section">
         <p class="hours-status">
           <span class="${isOpen ? "open" : "closed"}">${shop.status || ''}</span>
-          • Closes 12 a.m.
+          • Fecha 12 a.m.
         </p>
         <ul class="hours-list">
           ${Object.entries(weeklyHours)
             .map(([day, hours]) => 
-              `<li><strong>${day}</strong><span>${hours}</span></li>`
+              `<li><strong>${translateDays(day)}</strong><span>${hours}</span></li>`
             )
             .join("")}
         </ul>
       </div>
 
       <div class="modal-section">
-        <h4>Categories</h4>
+        <h4>Categorias</h4>
         <div class="tag-container">
           ${categories.map((c) => `<span class="tag">${c.trim()}</span>`).join("")}
         </div>
       </div>
 
       <div class="modal-section">
-        <p>Please see the store detail page for more info. (Placeholder)</p>
+        <p>Por favor, consulte a página de detalhes da loja para mais informações. (Placeholder)</p>
       </div>
 
       <div class="modal-section">
-        <button class="direction-btn">Order on Skipy</button>
+        <button class="direction-btn">Encomendar em Skipy</button>
       </div>
 
       <div class="modal-footer">
@@ -377,11 +390,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     if (results.length === 0) {
-      searchResultsContainer.innerHTML = "<p>No results found.</p>";
+      searchResultsContainer.innerHTML = "<p>Nenhum resultado encontrado.</p>";
       return;
     }
     results.forEach((shop) => {
-      const isOpen = shop.status === "Open";
+      const isOpen = shop.status === "Aberto";
       const div = document.createElement("div");
       div.className = "search-result";
       div.innerHTML = `
