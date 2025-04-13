@@ -252,8 +252,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <p>Por favor, consulte a página de detalhes da loja para mais informações. (Placeholder)</p>
       </div>
 
-      <div class="modal-section">
-        <button class="direction-btn">Encomendar em Skipy</button>
+      <div class="modal-section" style="text-align: center;">
+        <a href="http://skipy.online/gastrobar" class="direction-btn" target="_blank">Encomendar em Skipy</a>
       </div>
 
       <div class="modal-footer">

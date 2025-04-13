@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Vasco da Gama Marketplace</title>
+  <title>Mercado Vasco da Gama</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
@@ -35,12 +35,12 @@
     <aside class="sidebar">
       <!-- Top Icon (Filters) -->
       <div class="sidebar-top">
-        <button class="icon-btn filter-btn" title="Filters">☰</button>
+        <button class="icon-btn filter-btn" title="Filtros">☰</button>
       </div>
 
       <!-- Floor Buttons -->
       <div class="sidebar-middle">
-        <h2 class="sidebar-title">Floors</h2>
+        <h2 class="sidebar-title">Pisos</h2>
         <div class="filters">
           <button data-floor="3">3</button>
           <button data-floor="2">2</button>
@@ -53,8 +53,8 @@
 
       <!-- Bottom Icons (Settings & Contact) -->
       <div class="sidebar-bottom">
-        <button class="icon-btn settings-btn" title="Settings"><i class="fas fa-cog"></i></button>
-        <button class="icon-btn sos-btn" title="Contact"><i class="fas fa-phone"></i></button>
+        <button class="icon-btn settings-btn" title="Configurações"><i class="fas fa-cog"></i></button>
+        <button class="icon-btn sos-btn" title="Contato"><i class="fas fa-phone"></i></button>
       </div>
     </aside>
 
@@ -67,9 +67,9 @@
 
       <!-- Pagination -->
       <div class="pagination">
-        <button id="prev-page" class="pagination-btn">Previous</button>
+        <button id="prev-page" class="pagination-btn">Anterior</button>
         <span id="page-info" class="page-info"></span>
-        <button id="next-page" class="pagination-btn">Next</button>
+        <button id="next-page" class="pagination-btn">Próximo</button>
       </div>
     </main>
   </div>
@@ -86,19 +86,19 @@
   <div id="filter-modal" class="modal hidden">
     <div class="modal-content">
       <span class="close-btn" id="close-filter">&times;</span>
-      <h2 style="margin-top: 0;">Filter Shops</h2>
+      <h2 style="margin-top: 0;">Filtrar Lojas</h2>
 
       <div class="modal-section">
         <label>Status:</label>
         <div>
-          <label><input type="radio" name="status" value="all" checked> All</label><br>
-          <label><input type="radio" name="status" value="Open"> Open</label><br>
-          <label><input type="radio" name="status" value="Closed"> Closed</label>
+          <label><input type="radio" name="status" value="all" checked> Todos</label><br>
+          <label><input type="radio" name="status" value="Open"> Aberto</label><br>
+          <label><input type="radio" name="status" value="Closed"> Fechado</label>
         </div>
       </div>
 
       <div class="modal-section">
-        <label>Price:</label>
+        <label>Preço:</label>
         <div>
           <label><input type="checkbox" name="price" value="1"> $</label><br>
           <label><input type="checkbox" name="price" value="2"> $$</label><br>
@@ -107,15 +107,15 @@
       </div>
 
       <div class="modal-section">
-        <label>Categories:</label>
+        <label>Categorias:</label>
         <div id="category-options">
           <!-- checkboxes injected here -->
         </div>
       </div>
 
       <div class="modal-section" style="display: flex; gap: 0.5rem;">
-        <button id="apply-filter" class="direction-btn" style="flex: 1;">Apply Filter</button>
-        <button id="reset-filter" class="direction-btn" style="flex: 1; background: #ccc; color: #000;">Reset</button>
+        <button id="apply-filter" class="direction-btn" style="flex: 1;">Aplicar Filtro</button>
+        <button id="reset-filter" class="direction-btn" style="flex: 1; background: #ccc; color: #000;">Resetar</button>
       </div>
     </div>
   </div>
@@ -138,8 +138,8 @@
   <div id="settings-modal" class="modal hidden">
     <div class="modal-content">
       <span class="close-btn" id="close-settings">&times;</span>
-      <h2>Settings (MVP)</h2>
-      <p>Minimal version of Settings. (Placeholder)</p>
+      <h2>Configurações (MVP)</h2>
+      <p>Versão mínima das Configurações. (Placeholder)</p>
     </div>
   </div>
 
@@ -147,9 +147,9 @@
   <div id="sos-modal" class="modal hidden">
     <div class="modal-content">
       <span class="close-btn" id="close-sos">&times;</span>
-      <h2>Contact (MVP)</h2>
-      <p>Need help? Contact us at <br>
-      <strong>support@vascodagama.com</strong><br>
+      <h2>Contato (MVP)</h2>
+      <p>Precisa de ajuda? Contate-nos em <br>
+      <strong>suporte@vascodagama.com</strong><br>
       (+351) 123 456 789.</p>
     </div>
   </div>
