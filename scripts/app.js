@@ -400,6 +400,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Ensure the search modal is hidden on load
+  searchModal.classList.add("hidden");
+
   // Settings & SOS
   settingsBtn.addEventListener("click", () => {
     settingsModal.classList.remove("hidden");

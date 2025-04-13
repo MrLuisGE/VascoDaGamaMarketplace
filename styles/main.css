@@ -117,6 +117,15 @@ header {
   border-color: #0B0B0B;
 }
 
+/* Smaller floor buttons for mobile */
+@media (max-width: 600px) {
+  .filters button {
+    width: clamp(30px, 5vw, 50px);
+    height: clamp(30px, 5vw, 50px);
+    font-size: 0.8rem;
+  }
+}
+
 /* Sidebar Icon Buttons */
 .icon-btn {
   background: none;
@@ -132,6 +141,11 @@ header {
 }
 .icon-btn:hover {
   color: #0B0B0B;
+}
+
+/* Black icons for settings and contact */
+.settings-btn, .sos-btn {
+  color: #000;
 }
 
 /* Content */
@@ -151,33 +165,19 @@ header {
   justify-content: flex-start;
 }
 
-/* 
-  Default: 2 rows × 3 columns => 6 items 
-  If width <600 => 2 columns
-  If width <370 => 1 column
-  If height <650 => 1 row => 3 items
-*/
+/* Adjust grid layout for consistent two columns */
 #shop-grid {
   display: grid;
   gap: clamp(12px, 2vw, 18px);
   flex: 1;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, auto);
-  grid-template-columns: repeat(3, 1fr);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px), (max-width: 370px), (max-height: 650px) {
   #shop-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 370px) {
-  #shop-grid {
-    grid-template-columns: 1fr;
-  }
-}
-@media (max-height: 650px) {
-  #shop-grid {
-    grid-template-rows: repeat(1, auto);
+    grid-template-rows: repeat(2, auto);
   }
 }
 
@@ -186,14 +186,15 @@ header {
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-  padding: 1rem;
+  padding: 1rem 1rem 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-  height: clamp(180px, 25vw, 260px);
+  height: clamp(150px, 25vw, 260px);
   overflow: hidden;
+  margin-bottom: 0;
 }
 .shop-card:hover {
   transform: translateY(-3px);
@@ -223,8 +224,11 @@ header {
 
 /* Shop Info */
 .shop-info h3 {
+  font-size: 60%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0;
-  font-size: clamp(0.9rem, 2vw, 1.1rem);
   font-weight: 600;
   color: #222;
   display: -webkit-box;
@@ -233,6 +237,16 @@ header {
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 0.3rem;
+}
+
+.tag {
+  font-size: 80%;
+}
+
+@media (max-width: 320px) {
+  .shop-info h3 {
+    font-size: 50%;
+  }
 }
 
 /* Ratings */
@@ -398,7 +412,12 @@ header {
 }
 
 /* Search styles, etc. same as before */
+#search-modal {
+  display: flex;
+  flex-direction: column;
+}
 #search-input {
+  order: -1;
   width: 100%;
   padding: 0.5rem;
   font-size: clamp(0.85rem, 1.5vw, 1rem);
@@ -439,4 +458,17 @@ header {
   margin: 0;
   font-size: clamp(0.75rem, 1.4vw, 0.9rem);
   color: #666;
+}
+
+/* Responsive text size for smaller screens */
+@media (max-width: 320px) {
+  body {
+    font-size: 12px;
+  }
+  .shop-info h3, .shop-status-floor, .rating-stars, .pagination-btn, .page-info {
+    font-size: 0.75rem;
+  }
+  .icon-btn, .filters button {
+    font-size: 1rem;
+  }
 }
