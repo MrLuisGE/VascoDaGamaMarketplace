@@ -413,7 +413,6 @@ header {
 
 /* Search styles, etc. same as before */
 #search-modal {
-  display: flex;
   flex-direction: column;
 }
 #search-input {

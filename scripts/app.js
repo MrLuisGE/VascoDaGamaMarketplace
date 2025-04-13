@@ -358,10 +358,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Search
+  searchModal.classList.add("hidden");
   searchBtn.addEventListener("click", () => {
-    searchModal.classList.remove("hidden");
-    searchInput.value = "";
-    searchResultsContainer.innerHTML = "";
+    searchModal.classList.toggle("hidden");
   });
   closeSearchBtn.addEventListener("click", () => {
     searchModal.classList.add("hidden");
@@ -399,9 +398,6 @@ document.addEventListener("DOMContentLoaded", () => {
       searchResultsContainer.appendChild(div);
     });
   });
-
-  // Ensure the search modal is hidden on load
-  searchModal.classList.add("hidden");
 
   // Settings & SOS
   settingsBtn.addEventListener("click", () => {
