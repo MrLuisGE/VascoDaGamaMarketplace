@@ -192,13 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       `;
-      card.addEventListener("click", () => {
-        if (shop.external_url) {
-          window.open(shop.external_url, "_blank");
-        } else {
-          openModal(shop, isOpen);
-        }
-      });
+      card.addEventListener("click", () => openModal(shop, isOpen));
       grid.appendChild(card);
     });
   }
@@ -259,7 +253,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="modal-section" style="text-align: center;">
-        <a href="http://skipy.online/gastrobar" class="direction-btn" target="_blank">Encomendar em Skipy</a>
+        <a href="${shop.external_url || 'http://skipy.online/gastrobar'}" class="direction-btn">Encomendar em Skipy</a>
       </div>
 
       <div class="modal-footer">
