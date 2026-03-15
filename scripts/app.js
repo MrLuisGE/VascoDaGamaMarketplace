@@ -192,7 +192,13 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </div>
       `;
-      card.addEventListener("click", () => openModal(shop, isOpen));
+      card.addEventListener("click", () => {
+        if (shop.external_url) {
+          window.open(shop.external_url, "_blank");
+        } else {
+          openModal(shop, isOpen);
+        }
+      });
       grid.appendChild(card);
     });
   }
